@@ -51,7 +51,7 @@ export function renderProjectDataOverview(
 ): void {
   const tBody = $('#data-overview');
   const pSlug = projectSlug;
-  
+
   let hasDesc = false;
 
   for (const row of data) {
@@ -92,10 +92,12 @@ export function renderChanges(projectId: string): void {
     async (changesDetailsResponse) =>
       await renderChangeDetails(changesDetailsResponse, projectId)
   );
-}  
+}
 
 async function getChangesDetails(projectId: string) {
-  const changesDetailsResponse = await fetch(`/rebenchdb/dash/${projectId}/changes`);
+  const changesDetailsResponse = await fetch(
+    `/rebenchdb/dash/${projectId}/changes`
+  );
   return changesDetailsResponse;
 }
 
@@ -135,7 +137,6 @@ async function renderChangeDetails(changesDetailsResponse, projectId: string) {
   renderFilterMenu(details, projectId);
 }
 
-
 function renderFilterMenu(details, projectId) {
   // details.branchortag : string
   // details.commitid : string
@@ -144,9 +145,9 @@ function renderFilterMenu(details, projectId) {
   // details.projectid : number
   // details.repourl : string
 
-  $(".links_card").each(function(index) {
+  $('.links_card').each(function (index) {
     const $card = $(this);
-    const branchortag = details.changes.map(change => change.branchortag);
+    const branchortag = details.changes.map((change) => change.branchortag);
     let uniqueBranchOrTag = [...new Set(branchortag)];
 
     const renderList = (filter = '') => {
@@ -154,29 +155,32 @@ function renderFilterMenu(details, projectId) {
 
       const container = $('<div class="branch-cards-container"></div>');
 
-      uniqueBranchOrTag.filter(bot => bot.toLowerCase().includes(filter.toLowerCase())).forEach(bot => {
-        const $link = $(`<a class="list-group-item list-group-item-action list-min-padding"
+      uniqueBranchOrTag
+        .filter((bot) => bot.toLowerCase().includes(filter.toLowerCase()))
+        .forEach((bot) => {
+          const $link =
+            $(`<a class="list-group-item list-group-item-action list-min-padding"
           data-toggle="list" data-hash="${bot}" href="">
             ${bot}
           </a>
         `);
 
-        $link.on('click', function(event) {
-          event.preventDefault();
+          $link.on('click', function (event) {
+            event.preventDefault();
 
-          $card.find('.list-group-item').removeClass('active');
-          $(this).toggleClass('active');
-          console.log('clicked', bot);
+            $card.find('.list-group-item').removeClass('active');
+            $(this).toggleClass('active');
+            console.log('clicked', bot);
 
-          if (index === 0) {
-            updateChangesList(bot, projectId, true);
-          } else {
-            updateChangesList(bot, projectId, false);
-          }
+            if (index === 0) {
+              updateChangesList(bot, projectId, true);
+            } else {
+              updateChangesList(bot, projectId, false);
+            }
+          });
+
+          container.append($link);
         });
-
-        container.append($link);
-      });
 
       $card.append(container);
 
@@ -190,7 +194,7 @@ function renderFilterMenu(details, projectId) {
       renderList(filter);
     });
 
-    $card.find('.filter-options .filter-option').on('click', function(event) {
+    $card.find('.filter-options .filter-option').on('click', function (event) {
       event.preventDefault();
 
       $card.find('.filter-option').removeClass('selected-text');
@@ -201,7 +205,10 @@ function renderFilterMenu(details, projectId) {
       switch (filter) {
         case 'Most Used':
           uniqueBranchOrTag.sort((a, b) => {
-            return branchortag.filter(x => x === b).length - branchortag.filter(x => x === a).length;
+            return (
+              branchortag.filter((x) => x === b).length -
+              branchortag.filter((x) => x === a).length
+            );
           });
           break;
         case 'Alphabetical':
@@ -209,8 +216,12 @@ function renderFilterMenu(details, projectId) {
           break;
         case 'Most recent':
           uniqueBranchOrTag.sort((a, b) => {
-            const dateA = details.changes.find(x => x.branchortag === a).experimenttime;
-            const dateB = details.changes.find(x => x.branchortag === b).experimenttime
+            const dateA = details.changes.find(
+              (x) => x.branchortag === a
+            ).experimenttime;
+            const dateB = details.changes.find(
+              (x) => x.branchortag === b
+            ).experimenttime;
             return new Date(dateB) - new Date(dateA);
           });
           break;
@@ -224,7 +235,9 @@ function renderFilterMenu(details, projectId) {
 }
 
 function updateChangesList(branchOrTag, projectId, isBaseline) {
-  const selector = isBaseline ? `#p${projectId}-baseline` : `#p${projectId}-change`;
+  const selector = isBaseline
+    ? `#p${projectId}-baseline`
+    : `#p${projectId}-change`;
   const target = $(selector);
   target.empty();
 
@@ -250,9 +263,9 @@ function updateChangesList(branchOrTag, projectId, isBaseline) {
     }
 
     // set a event for each list group item which calls setHref
-    target.find('a').on('click', (event) =>
-      setHref(event, projectId, isBaseline)
-    );
+    target
+      .find('a')
+      .on('click', (event) => setHref(event, projectId, isBaseline));
   });
 }
 
