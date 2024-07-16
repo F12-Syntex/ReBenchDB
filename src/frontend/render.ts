@@ -141,24 +141,19 @@ function renderFilterMenu(details, projectId) {
   // details.commitid : string
   // details.commitmessage : string
   // details.experimenttime : string
-  // details.projectid : string
+  // details.projectid : number
   // details.repourl : string
 
-  // Render all unique details.branchortag in the links_card
   $(".links_card").each(function(index) {
     const $card = $(this);
     const branchortag = details.changes.map(change => change.branchortag);
     let uniqueBranchOrTag = [...new Set(branchortag)];
 
-    // Function to render the list of branches or tags
     const renderList = (filter = '') => {
-      // Clear existing list
       $card.find('.branch-cards-container').remove();
 
-      // Create a container div
       const container = $('<div class="branch-cards-container"></div>');
 
-      // Append filtered items to the container
       uniqueBranchOrTag.filter(bot => bot.toLowerCase().includes(filter.toLowerCase())).forEach(bot => {
         const $link = $(`<a class="list-group-item list-group-item-action list-min-padding"
           data-toggle="list" data-hash="${bot}" href="">
@@ -166,19 +161,13 @@ function renderFilterMenu(details, projectId) {
           </a>
         `);
 
-        // Add click event listener to the link
         $link.on('click', function(event) {
           event.preventDefault();
 
-          // Remove 'active' class from all other links
           $card.find('.list-group-item').removeClass('active');
-
-          // Toggle 'active' class on the clicked link
           $(this).toggleClass('active');
-
           console.log('clicked', bot);
 
-          // Update the corresponding changes list
           if (index === 0) {
             updateChangesList(bot, projectId, true);
           } else {
@@ -189,32 +178,25 @@ function renderFilterMenu(details, projectId) {
         container.append($link);
       });
 
-      // Append the container to the current links_card
       $card.append(container);
 
       console.log('renderList', filter);
     };
 
-    // Initial render of the list
     renderList();
 
-    // Event listener for search filter input scoped to this links_card
     $card.find('.filter-header input').on('input', (event) => {
       const filter = $(event.target).val();
       renderList(filter);
     });
 
-    // Add functionality to the sorting options
     $card.find('.filter-options .filter-option').on('click', function(event) {
       event.preventDefault();
 
-      // Remove 'selected-text' class from all other links
       $card.find('.filter-option').removeClass('selected-text');
 
-      // Toggle 'selected-text' class on the clicked link
       $(this).toggleClass('selected-text');
 
-      // Sort the list
       const filter = $(this).text();
       switch (filter) {
         case 'Most Used':
