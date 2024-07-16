@@ -148,7 +148,7 @@ function renderFilterMenu(details, projectId) {
   $(".links_card").each(function(index) {
     const $card = $(this);
     const branchortag = details.changes.map(change => change.branchortag);
-    const uniqueBranchOrTag = [...new Set(branchortag)];
+    let uniqueBranchOrTag = [...new Set(branchortag)];
 
     // Function to render the list of branches or tags
     const renderList = (filter = '') => {
@@ -202,6 +202,41 @@ function renderFilterMenu(details, projectId) {
     $card.find('.filter-header input').on('input', (event) => {
       const filter = $(event.target).val();
       renderList(filter);
+    });
+
+    // Add functionality to the sorting options
+    $card.find('.filter-options .filter-option').on('click', function(event) {
+      event.preventDefault();
+
+      // Remove 'selected-text' class from all other links
+      $card.find('.filter-option').removeClass('selected-text');
+
+      // Toggle 'selected-text' class on the clicked link
+      $(this).toggleClass('selected-text');
+
+      // Sort the list
+      const filter = $(this).text();
+      switch (filter) {
+        case 'Most Used':
+          uniqueBranchOrTag.sort((a, b) => {
+            return branchortag.filter(x => x === b).length - branchortag.filter(x => x === a).length;
+          });
+          break;
+        case 'Alphabetical':
+          uniqueBranchOrTag.sort((a, b) => a.localeCompare(b));
+          break;
+        case 'Most recent':
+          uniqueBranchOrTag.sort((a, b) => {
+            const dateA = details.changes.find(x => x.branchortag === a).experimenttime;
+            const dateB = details.changes.find(x => x.branchortag === b).experimenttime
+            return new Date(dateB) - new Date(dateA);
+          });
+          break;
+        default:
+          break;
+      }
+
+      renderList();
     });
   });
 }
