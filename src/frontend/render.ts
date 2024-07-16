@@ -147,8 +147,10 @@ function renderFilterMenu(details, projectId) {
 
   $('.links_card').each(function (index) {
     const $card = $(this);
-    const branchortag = details.changes.map((change) => change.branchortag);
-    let uniqueBranchOrTag = [...new Set(branchortag)];
+    const branchortag: string[] = details.changes.map(
+      (change) => change.branchortag
+    );
+    const uniqueBranchOrTag = [...new Set(branchortag)];
 
     const renderList = (filter = '') => {
       $card.find('.branch-cards-container').remove();
@@ -190,7 +192,7 @@ function renderFilterMenu(details, projectId) {
     renderList();
 
     $card.find('.filter-header input').on('input', (event) => {
-      const filter = $(event.target).val();
+      const filter = <string>$(event.target).val();
       renderList(filter);
     });
 
@@ -222,7 +224,7 @@ function renderFilterMenu(details, projectId) {
             const dateB = details.changes.find(
               (x) => x.branchortag === b
             ).experimenttime;
-            return new Date(dateB) - new Date(dateA);
+            return new Date(dateB).getTime() - new Date(dateA).getTime();
           });
           break;
         default:
