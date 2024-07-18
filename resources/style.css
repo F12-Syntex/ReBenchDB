@@ -27,7 +27,7 @@ body.compare, body.timeline {
 
 .project_container {
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 1fr 8fr 1fr;
   grid-gap: 10px;
 }
 
