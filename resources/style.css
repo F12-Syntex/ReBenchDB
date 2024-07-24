@@ -26,9 +26,8 @@ body.compare, body.timeline {
 }
 
 .project_container {
-  display: grid;
-  grid-template-columns: 1fr 8fr 1fr;
-  grid-gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 
@@ -37,11 +36,11 @@ body.compare, body.timeline {
   border-radius: 8px;
   background-color: #f9f9f9;
 
-  padding: 15px;
-  margin-bottom: 15px;
   background-color: #f9f9f9;
 
   margin-top: 1em;
+
+  width: 100px;
 }
 
 .links_card .filter-header {
