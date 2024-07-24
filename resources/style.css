@@ -40,33 +40,16 @@ body.compare, body.timeline {
 
   margin-top: 1em;
 
-  width: 100px;
-}
-
-.links_card .filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.links_card .filter-header input {
-  width: 70%;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  width: 200px;
 }
 
 .links_card .filter-options {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
 }
 
 .links_card .filter-option {
   cursor: pointer;
-  padding: 5px 10px;
   border-radius: 4px;
   border: 1px solid transparent;
 }
@@ -75,10 +58,6 @@ body.compare, body.timeline {
   border-color: #007bff;
   background-color: #007bff;
   color: white;
-}
-
-.branch-cards-container {
-  padding: 10px;
 }
 
 .branch-cards-container .list-group-item {
@@ -103,11 +82,11 @@ body.compare, body.timeline {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+  padding: 1px;
   background-color: #fff;
   border-radius: 5px 5px 0 0;
+
+  width: 100%;
 }
 
 .filter-header input {
@@ -125,7 +104,6 @@ body.compare, body.timeline {
 }
 
 .filter-options {
-  padding: 10px;
   background-color: #fff;
   border-top: none;
   border-bottom: 1px solid #ddd;
@@ -134,9 +112,9 @@ body.compare, body.timeline {
 
 .filter-options a {
   display: block;
-  padding: 5px 0;
   color: #007bff;
   text-decoration: none;
+  font-size: 0.9em;
 }
 
 .filter-options a:hover {
