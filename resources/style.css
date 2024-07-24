@@ -25,10 +25,23 @@ body.compare, body.timeline {
   margin-left: -10px;
 }
 
-.project_container {
-  display: grid;
-  grid-template-columns: 20% 50% 50%;
-} 
+@media (min-width: 577px) {
+  .project_container {
+    display: grid;
+    grid-template-columns: 20% 50% 50%;
+  } 
+}
+
+@media (max-width: 576px) {
+  .links_card {
+    /* hidden */
+    display: none;
+  }
+  .project_container {
+    display: block;
+  }
+}
+
  
 
 #branchSearch{
